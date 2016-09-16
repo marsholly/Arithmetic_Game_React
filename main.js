@@ -29,10 +29,10 @@ let App = React.createClass({
     }
 
     this.setState({
-      question: "Question: "+number1 + operation + number2 + " = ",
-      number1: number1,
-      number2: number2,
-      operation: operation
+      question: "Question: " + number1 + operation + number2 + " = ",
+      number1,
+      number2,
+      operation
     })
   },
 
@@ -44,6 +44,7 @@ let App = React.createClass({
     });
   },
 
+  // clearResult () => this.setState({ number: '' })
   clearResult() {
     this.setState({
       numbers: ''
@@ -54,33 +55,30 @@ let App = React.createClass({
     let {number1, number2, operation, numbers, message, score } = this.state;
     let correctAnswer = null;
 
-    if(operation === "+"){
-      correctAnswer = +number1 + +number2;
+    switch (operation) {
+      case "+":
+        correctAnswer = Number(number1) + Number(number2);
+        break;
+      case "-":
+        correctAnswer = Number(number1) - Number(number2);
+        break;
+      case "*":
+        correctAnswer = Number(number1) * Number(number2);
+        break;
+      default:
+        if(number2 === '0'){
+          number2 = Math.floor(Math.random()* 10) + 1;
+          this.setState({number2});
+        }
+        correctAnswer = Math.floor(Number(number1) / Number(number2));
     }
 
-    if(operation === "-"){
-      correctAnswer = +number1 - +number2;
-    }
-
-    if(operation === "*"){
-      correctAnswer = +number1 * +number2;
-    }
-
-    if(operation === "/"){
-      if(number2 === '0'){
-        number2 = Math.floor(Math.random()* 10) + 1;
-        this.setState({number2});
-      }
-      correctAnswer = Math.floor(+number1 / +number2);
-    }
-
-    if( +numbers === correctAnswer ){
+    if( Number(numbers) === correctAnswer ){
       document.getElementById('submit').disabled=true;
       this.setState({
         score: score + 1,
         message: "Good job! You are right."
       });
-
     }else{
       document.getElementById('submit').disabled=false;
       this.setState({
@@ -101,28 +99,26 @@ let App = React.createClass({
     let { number1, number2, operation } = this.state;
     let correctAnswer;
 
-    if(operation === "+"){
-      correctAnswer = +number1 + +number2;
-    }
-
-    if(operation === "-"){
-      correctAnswer = +number1 - +number2;
-    }
-
-    if(operation === "*"){
-      correctAnswer = +number1 * +number2;
-    }
-
-    if(operation === "/"){
-      if(number2 === '0'){
-        number2 = Math.floor(Math.random()* 10) + 1;
-        this.setState({number2});
-      }
-      correctAnswer = Math.floor(+number1 / +number2);
+    switch (operation) {
+      case "+":
+        correctAnswer = Number(number1) + Number(number2);
+        break;
+      case "-":
+        correctAnswer = Number(number1) - Number(number2);
+        break;
+      case "*":
+        correctAnswer = Number(number1) * Number(number2);
+        break;
+      default:
+        if(number2 === '0'){
+          number2 = Math.floor(Math.random()* 10) + 1;
+          this.setState({number2});
+        }
+        correctAnswer = Math.floor(Number(number1) / Number(number2));
     }
 
     this.setState({
-      message: "The answer is: "+number1 + operation + number2 + "=" + correctAnswer
+      message: "The answer is: "+ number1 + operation + number2 + "=" + correctAnswer
     });
 
     setTimeout( () => {
@@ -133,15 +129,23 @@ let App = React.createClass({
 
   },
 
+  // renderButtons() {
+  //   let elementArray = [0,1,2,3,4,5,6,7,8,9];
+  //   return elementArray.map((number) =>
+  //     return(
+  //       <button className="btn btn-md btn-success" value=`${number}` onClick={this.submitResult}>`${number}`</button>&nbsp;
+  //     )
+  //   )
+  // },
+
   render() {
     let { question, numbers, message, score } = this.state;
     return (
       <div className="container main">
         <button className="btn btn-default" onClick={this.getQuestion} id="start">Start</button>
-        <h3> {question}{numbers}
-
-        </h3>
+        <h3> {question}{numbers}</h3>
         <div>
+        {/* {this.renderButtons} */}
           <button className="btn btn-md btn-success" value="0" onClick={this.submitResult}>0</button>&nbsp;
           <button className="btn btn-md btn-success" value="1" onClick={this.submitResult}>1</button>&nbsp;
           <button className="btn btn-md btn-success" value="2" onClick={this.submitResult}>2</button>&nbsp;
