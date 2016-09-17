@@ -44,12 +44,17 @@ let App = React.createClass({
     });
   },
 
-  // clearResult () => this.setState({ number: '' })
-  clearResult() {
-    this.setState({
-      numbers: ''
-    });
-  },
+  clearResult: () => this.setState({ number: '' }),
+
+  // clearResult: function() {
+  //   return this.setState({ number: '' })
+  // },
+
+  // clearResult() {
+  //   this.setState({
+  //     numbers: ''
+  //   });
+  // },
 
   checkResult() {
     let {number1, number2, operation, numbers, message, score } = this.state;
@@ -129,14 +134,10 @@ let App = React.createClass({
 
   },
 
-  // renderButtons() {
-  //   let elementArray = [0,1,2,3,4,5,6,7,8,9];
-  //   return elementArray.map((number) =>
-  //     return(
-  //       <button className="btn btn-md btn-success" value=`${number}` onClick={this.submitResult}>`${number}`</button>&nbsp;
-  //     )
-  //   )
-  // },
+  renderButtons() {
+    let elementArray = [0,1,2,3,4,5,6,7,8,9];
+    return elementArray.map((number, index) => <span key={index}><button className="btn btn-md btn-success" value={number} onClick={this.submitResult}>{number}</button>&nbsp;</span>);
+  },
 
   render() {
     let { question, numbers, message, score } = this.state;
@@ -144,20 +145,7 @@ let App = React.createClass({
       <div className="container main">
         <button className="btn btn-default" onClick={this.getQuestion} id="start">Start</button>
         <h3> {question}{numbers}</h3>
-        <div>
-        {/* {this.renderButtons} */}
-          <button className="btn btn-md btn-success" value="0" onClick={this.submitResult}>0</button>&nbsp;
-          <button className="btn btn-md btn-success" value="1" onClick={this.submitResult}>1</button>&nbsp;
-          <button className="btn btn-md btn-success" value="2" onClick={this.submitResult}>2</button>&nbsp;
-          <button className="btn btn-md btn-success" value="3" onClick={this.submitResult}>3</button>&nbsp;
-          <button className="btn btn-md btn-success" value="4" onClick={this.submitResult}>4</button>&nbsp;
-          <button className="btn btn-md btn-success" value="5" onClick={this.submitResult}>5</button>&nbsp;
-          <button className="btn btn-md btn-success" value="6" onClick={this.submitResult}>6</button>&nbsp;
-          <button className="btn btn-md btn-success" value="7" onClick={this.submitResult}>7</button>&nbsp;
-          <button className="btn btn-md btn-success" value="8" onClick={this.submitResult}>8</button>&nbsp;
-          <button className="btn btn-md btn-success" value="9" onClick={this.submitResult}>9</button>&nbsp;
-          <button className="btn btn-md btn-success" value="-" onClick={this.submitResult}>-</button>&nbsp;
-        </div>
+        <div>{this.renderButtons()}</div>
         <div className="sumbit">
           <button className="control btn btn-warning" onClick={this.clearResult}>CLEAR</button>&nbsp;
           <button className="control btn btn-primary" onClick={this.checkResult} id="submit">SUBMIT</button>&nbsp;
