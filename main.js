@@ -15,7 +15,7 @@ let App = React.createClass({
     $('#start').hide();
     let number1, number2, operation;
     number1 = Math.floor(Math.random()* 10);
-    number2 = Math.floor(Math.random()* 10);
+    number2 = Math.floor(Math.random()* 10)+1;
 
     let randomOperation = Math.floor(Math.random() * 4 + 1);
     switch(randomOperation){
@@ -44,17 +44,11 @@ let App = React.createClass({
     });
   },
 
-  clearResult: () => this.setState({ number: '' }),
-
-  // clearResult: function() {
-  //   return this.setState({ number: '' })
-  // },
-
-  // clearResult() {
-  //   this.setState({
-  //     numbers: ''
-  //   });
-  // },
+  clearResult() {
+    this.setState({
+      numbers: ''
+    });
+  },
 
   checkResult() {
     let {number1, number2, operation, numbers, message, score } = this.state;
@@ -71,11 +65,7 @@ let App = React.createClass({
         correctAnswer = Number(number1) * Number(number2);
         break;
       default:
-        if(number2 === '0'){
-          number2 = Math.floor(Math.random()* 10) + 1;
-          this.setState({number2});
-        }
-        correctAnswer = Math.floor(Number(number1) / Number(number2));
+          correctAnswer = Math.floor(Number(number1) / Number(number2));
     }
 
     if( Number(numbers) === correctAnswer ){
@@ -115,10 +105,6 @@ let App = React.createClass({
         correctAnswer = Number(number1) * Number(number2);
         break;
       default:
-        if(number2 === '0'){
-          number2 = Math.floor(Math.random()* 10) + 1;
-          this.setState({number2});
-        }
         correctAnswer = Math.floor(Number(number1) / Number(number2));
     }
 
@@ -135,7 +121,7 @@ let App = React.createClass({
   },
 
   renderButtons() {
-    let elementArray = [0,1,2,3,4,5,6,7,8,9];
+    let elementArray = [0,1,2,3,4,5,6,7,8,9,"-"];
     return elementArray.map((number, index) => <span key={index}><button className="btn btn-md btn-success" value={number} onClick={this.submitResult}>{number}</button>&nbsp;</span>);
   },
 
@@ -160,7 +146,6 @@ let App = React.createClass({
     )
   }
 });
-
 
 ReactDOM.render(
   <App/>,
